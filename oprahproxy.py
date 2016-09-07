@@ -44,98 +44,98 @@ class OprahProxy:
         return result
 
     def register_subscriber(self):
-        print('DEBUG: Call register_subscriber')
+        #print('DEBUG: Call register_subscriber')
         email_user = uuid.uuid4()
         email = '%s@mailinator.com' % email_user
         password = uuid.uuid4()
         password_hash = hashlib.sha1(
             str(password).encode('ascii')).hexdigest().upper()
-        print('DEBUG: Your SurfEasy email: %s' % email)
-        print('DEBUG: Your SurfEasy password: %s' % password)
-        print('DEBUG: Your SurfEasy password hash: %s' % password_hash)
-        print('DEBUG: Your mailbox: https://mailinator.com/inbox2.jsp?%s' %
-              urllib.parse.urlencode({'public_to': email_user}))
-        print("DEBUG: These are not the credentials you are looking for "
+        #print('DEBUG: Your SurfEasy email: %s' % email)
+        #print('DEBUG: Your SurfEasy password: %s' % password)
+        #print('DEBUG: Your SurfEasy password hash: %s' % password_hash)
+        #print('DEBUG: Your mailbox: https://mailinator.com/inbox2.jsp?%s' %
+        #      urllib.parse.urlencode({'public_to': email_user}))
+        #print("DEBUG: These are not the credentials you are looking for "
               "(you won't probably need these, ever)")
 
         data = {'email': email,
                 'password': password_hash}
         result = self.post('/v2/register_subscriber', data)
-        print('DEBUG: Subscriber registered')
+        #print('DEBUG: Subscriber registered')
         with open('creds', 'w') as f:
             f.write(email + ' ' + password_hash)
 
 
     @staticmethod
     def you_get_a_proxy():
-        print('++++++++++++++++++++++++++=======================~~~~~~~::::')
-        print(',..,,,.,,...,,,.,,,,,,,,,,............,.....,.,,::::~~======')
-        print(',,,,,:,,,,,,,,,,,,,,                    ,.,,,,,,,,,,,,,....~')
-        print('~~~~~~~:::::::::::::  YOU GET A PROXY!  ,,,,,,,,,,,,,,,,,:~=')
-        print('~~===~~~~::::::::::.                    ,,,,,,,,,,,,,,,~~~:~')
-        print('::~:::::::::::::::,,...,~=::~=~:.....,,,,,,,,,,,,,,,:~:~:,::')
-        print('??+=..,++++++++++=.....:===I+~=~....,,~~=~~~~~~~:~====~,,::~')
-        print('::~....,...............~=~~~~:=~,...,.~~~======~==++=~:====+')
-        print('::~...,:,,,,,,,,.......:==~+=:~:,.....,,,,,,,~~~====~,,,,,,,')
-        print(':::~~~:,::,,::::,......+~~===~:,.....,,,,,,~~~~~==~,,,,....,')
-        print('~:~:,,,,,:::::,..........~~::~,:....:~~~~~::::~:::::,,,,,,,,')
-        print('~...~~~,,::~~::~:........~~~:~::.:,,:~::::::::::::::::::::::')
-        print('+..???+?~,::::::::::::~:~::~~~:~::::::::::::::::~~=~~~~~~~~=')
-        print('...?????+?,.:::::::::::~~:~~::~:::::::::::::::,~++++++++++++')
-        print('?=??????+??~,::::::::~~~~~~~~~~::::::::::::::,=+++++++++++++')
-        print('????????????::::::,::~~~~~~~~~~:::::::::::::,+++++++++++++++')
-        print('??+??????????:,,::,:::~~~~~~~:::::::::::::,+++++++++++++++++')
-        print('??????????????+,,,,:::~~,~~~~~:::=,:::::,?+?++++++++++++++++')
-        print('????????????????+,:::~~:,~~~~~~~~:~::::=+??+?++?++++++++++++')
-        print('??????????????????:::~~~~~~~~~~~:::::::???????++++++++++++++')
-        print('??????????????????=:::~~~~~~~~~::::::::+??????+++++?+?++++++')
-        print('=+==+====++++++++==:::~:,~~~~~:::,::::~====~~::::,,...,:~~=+')
-        print('++++++++++++===++++::~:~~~~~~::::~::::=+++++++++++++========')
-        print('=====+++++=====++++:~:~~~~~~::::::::::~++===================')
-        print('+++==+======+++                           ==================')
-        print('~~~~==========~  EVERYBODY GETS A PROXY!  ~~~~~~~~~~~~~~~~~~')
-        print('~~~~~~~~~~~===~                           ~~~~~~~~~~~~~~~~~~')
-        print('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
-        print('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
+        #print('++++++++++++++++++++++++++=======================~~~~~~~::::')
+        #print(',..,,,.,,...,,,.,,,,,,,,,,............,.....,.,,::::~~======')
+        #print(',,,,,:,,,,,,,,,,,,,,                    ,.,,,,,,,,,,,,,....~')
+        #print('~~~~~~~:::::::::::::  YOU GET A PROXY!  ,,,,,,,,,,,,,,,,,:~=')
+        #print('~~===~~~~::::::::::.                    ,,,,,,,,,,,,,,,~~~:~')
+        #print('::~:::::::::::::::,,...,~=::~=~:.....,,,,,,,,,,,,,,,:~:~:,::')
+        #print('??+=..,++++++++++=.....:===I+~=~....,,~~=~~~~~~~:~====~,,::~')
+        #print('::~....,...............~=~~~~:=~,...,.~~~======~==++=~:====+')
+        #print('::~...,:,,,,,,,,.......:==~+=:~:,.....,,,,,,,~~~====~,,,,,,,')
+        #print(':::~~~:,::,,::::,......+~~===~:,.....,,,,,,~~~~~==~,,,,....,')
+        #print('~:~:,,,,,:::::,..........~~::~,:....:~~~~~::::~:::::,,,,,,,,')
+        #print('~...~~~,,::~~::~:........~~~:~::.:,,:~::::::::::::::::::::::')
+        #print('+..???+?~,::::::::::::~:~::~~~:~::::::::::::::::~~=~~~~~~~~=')
+        #print('...?????+?,.:::::::::::~~:~~::~:::::::::::::::,~++++++++++++')
+        #print('?=??????+??~,::::::::~~~~~~~~~~::::::::::::::,=+++++++++++++')
+        #print('????????????::::::,::~~~~~~~~~~:::::::::::::,+++++++++++++++')
+        #print('??+??????????:,,::,:::~~~~~~~:::::::::::::,+++++++++++++++++')
+        #print('??????????????+,,,,:::~~,~~~~~:::=,:::::,?+?++++++++++++++++')
+        #print('????????????????+,:::~~:,~~~~~~~~:~::::=+??+?++?++++++++++++')
+        #print('??????????????????:::~~~~~~~~~~~:::::::???????++++++++++++++')
+        #print('??????????????????=:::~~~~~~~~~::::::::+??????+++++?+?++++++')
+        #print('=+==+====++++++++==:::~:,~~~~~:::,::::~====~~::::,,...,:~~=+')
+        #print('++++++++++++===++++::~:~~~~~~::::~::::=+++++++++++++========')
+        #print('=====+++++=====++++:~:~~~~~~::::::::::~++===================')
+        #print('+++==+======+++                           ==================')
+        #print('~~~~==========~  EVERYBODY GETS A PROXY!  ~~~~~~~~~~~~~~~~~~')
+        #print('~~~~~~~~~~~===~                           ~~~~~~~~~~~~~~~~~~')
+        #print('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
+        #print('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
 
     def register_device(self):
-        print('DEBUG: Call register_device')
+        #print('DEBUG: Call register_device')
         data = {'client_type': self.client_type,
                 'device_hash': '4BE7D6F1BD040DE45A371FD831167BC108554111',
                 'device_name': 'Opera-Browser-Client'}
 
         result = self.post('/v2/register_device', data)
         self.device_id = result['data']['device_id']
-        print('DEBUG: Device id: %s' % self.device_id)
+        #print('DEBUG: Device id: %s' % self.device_id)
         self.device_id_hash = hashlib.sha1(
             str(self.device_id).encode('ascii')).hexdigest().upper()
         self.device_password = result['data']['device_password']
-        print('DEBUG: Device registered')
+        #print('DEBUG: Device registered')
         with open('secret', 'w') as f:
             f.write(self.device_id_hash + ' ' + self.device_password)
 
     def geo_list(self):
-        print('DEBUG: Call geo_list')
+        #print('DEBUG: Call geo_list')
         data = {'device_id': self.device_id_hash}
         result = self.post('/v2/geo_list', data)
         codes = []
         for geo in result['data']['geos']:
             codes.append(geo['country_code'])
-            print('INFO: Supported country: %s %s' %
-                  (geo['country_code'], geo['country']))
-        print('DEBUG: Geo list fetched')
+            #print('INFO: Supported country: %s %s' %
+            #      (geo['country_code'], geo['country']))
+        #print('DEBUG: Geo list fetched')
         return codes
 
     def discover(self, country_code):
-        print('DEBUG: Call discover %s' % country_code)
+        #print('DEBUG: Call discover %s' % country_code)
         data = {'serial_no': self.device_id_hash,
                 'requested_geo': '"%s"' % country_code}
         result = self.post('/v2/discover', data)
 
-        print('INFO: Your location is %s%s%s' %
-              (result['data']['requester_geo']['country_code'],
-               '/' if result['data']['requester_geo']['state_code'] else '',
-               result['data']['requester_geo']['state_code']))
+        #print('INFO: Your location is %s%s%s' %
+        #      (result['data']['requester_geo']['country_code'],
+        #       '/' if result['data']['requester_geo']['state_code'] else '',
+        #       result['data']['requester_geo']['state_code']))
         for ip in result['data']['ips']:
             for port in ip['ports']:
                 if port == 443 and self.example_proxy is None:
@@ -143,28 +143,28 @@ class OprahProxy:
                 print('INFO: Proxy in %s/%s %s:%s' %
                       (ip['geo']['country_code'], ip['geo']['state_code'],
                        ip['ip'], port))
-        print('DEBUG: Proxies discovered')
+        #print('DEBUG: Proxies discovered')
 
     def everybody_gets_a_proxy(self):
         self.register_subscriber()
         self.register_device()
         for country_code in self.geo_list():
             self.discover(country_code)
-        print(
-            'INFO: Pick a proxy from the list above and use these credentials:')
-        print('INFO: Username: %s' % self.device_id_hash)
-        print('INFO: Password: %s' % self.device_password)
+        #print(
+        #    'INFO: Pick a proxy from the list above and use these credentials:')
+        #print('INFO: Username: %s' % self.device_id_hash)
+        #print('INFO: Password: %s' % self.device_password)
         creds = ('%s:%s' % (self.device_id_hash, self.device_password)).encode(
             'ascii')
         header = 'Proxy-Authorization: Basic %s' % base64.b64encode(
             creds).decode('ascii')
-        print('INFO: HTTP header %s' % header)
-        print('DEBUG: Example bash command: URL="http://www.opera.com" PROXY=%s '
-              'HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | '
-              'openssl s_client -connect $PROXY -ign_eof' % (
-                self.example_proxy, header))
-        print('DEBUG: For PAC-file for other browsers see '
-              'https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
+        #print('INFO: HTTP header %s' % header)
+        #print('DEBUG: Example bash command: URL="http://www.opera.com" PROXY=%s '
+        #      'HEADER="%s"; echo -e "GET $URL HTTP/1.0\\n$HEADER\\n\\n" | '
+        #      'openssl s_client -connect $PROXY -ign_eof' % (
+        #        self.example_proxy, header))
+        #print('DEBUG: For PAC-file for other browsers see '
+        #      'https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
 
 
 #you_get_a_proxy = OprahProxy('se0306',
