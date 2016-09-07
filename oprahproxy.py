@@ -56,7 +56,7 @@ class OprahProxy:
         #print('DEBUG: Your mailbox: https://mailinator.com/inbox2.jsp?%s' %
         #      urllib.parse.urlencode({'public_to': email_user}))
         #print("DEBUG: These are not the credentials you are looking for "
-              "(you won't probably need these, ever)")
+        #      "(you won't probably need these, ever)")
 
         data = {'email': email,
                 'password': password_hash}
