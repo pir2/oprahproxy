@@ -76,7 +76,7 @@ def get_proxy():
     #print('Proxy:', proxy, port)
 
     #return basic_auth, proxy, port
-    return basic_auth, '68.71.61.22', 443
+    return basic_auth, '184.75.221.235', 443
 
 class PatchedContext:
 
