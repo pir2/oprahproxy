@@ -40,11 +40,11 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
             print('new remote connection:', psize)
             log.info('new remote connection: %s', psize)
             random_int = random.randint(1,len(proxies))-1
-            proxy, port = proxies[random_int][1], proxies[random_int][2]
-            print('IP PORT %s %s' % (proxy, port))
-            log.info('IP PORT %s %s' % (proxy, port))
+            country, proxy, port = proxies[random_int]
+            print('COUNTRY %s IP %s PORT %s' % (country, proxy, port))
+            log.info('COUNTRY %s IP %s PORT %s' % (country, proxy, port))
             remote_reader, remote_writer = await asyncio.open_connection(
-                host=proxy, port=port, ssl=True, server_hostname='ca.opera-proxy.net')
+                host=proxy, port=port, ssl=True, server_hostname=country+'.opera-proxy.net')
         else:
             remote_reader, remote_writer = await pool.get()
 
