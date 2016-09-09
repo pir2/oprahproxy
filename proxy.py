@@ -11,14 +11,6 @@ log = logging.getLogger(__name__)
 
 mycountries = ['CA','US']
 
-if os.path.isfile('proxylist.csv'):
-    with open('proxylist.csv', newline='') as csvfile:
-        i = csv.reader(csvfile, delimiter=',')
-        proxylist = [proxylist for proxylist in i] 
-    proxies = [p for p in proxylist if p[0] in mycountries]
-else:
-    proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
-
 auth = None
 pool = asyncio.Queue()
 psize = 0
@@ -109,6 +101,13 @@ def client_handler(client_reader, client_writer):
     asyncio.ensure_future(process_client(client_reader, client_writer))
 
 if __name__ == '__main__':
+    if os.path.isfile('proxylist.csv'):
+        with open('proxylist.csv', newline='') as csvfile:
+            i = csv.reader(csvfile, delimiter=',')
+            proxylist = [proxylist for proxylist in i] 
+        proxies = [p for p in proxylist if p[0] in mycountries]
+    else:
+        proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
     auth, proxy, port = get_proxy()
     auth = 'Proxy-Authorization: BASIC {}\r\n'.format(auth).encode('ascii')
     loop = asyncio.get_event_loop()
