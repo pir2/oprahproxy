@@ -145,8 +145,8 @@ class OprahProxy:
         #      'https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
 
 
-you_get_a_proxy = OprahProxy('se0306',
+#you_get_a_proxy = OprahProxy('se0306',
                              '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
-you_get_a_proxy.you_get_a_proxy()
-you_get_a_proxy.everybody_gets_a_proxy()
+#you_get_a_proxy.you_get_a_proxy()
+#you_get_a_proxy.everybody_gets_a_proxy()
 #print(you_get_a_proxy.deviceid)
