@@ -2,14 +2,25 @@
 import asyncio
 import logging
 import random
+import os.path
+import csv
 from vpn import get_proxy
 
 
 log = logging.getLogger(__name__)
-proxies = ['68.71.61.22','162.253.131.60','162.253.131.99','162.219.176.244','184.75.221.235','162.253.130.147','162.219.176.236','184.75.221.101']
-ports = [443,80,8181,22,443,80,8181,22]
-proxy = port = auth = None
-pool = asyncio.Queue(5)
+
+mycountries = ['CA','US']
+
+if os.path.isfile('proxylist.csv'):
+    with open('proxylist.csv', newline='') as csvfile:
+        i = csv.reader(csvfile, delimiter=',')
+        proxylist = [proxylist for proxylist in i] 
+    proxies = [p for p in proxylist if p[0] in mycountries]
+else:
+    proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
+
+auth = None
+pool = asyncio.Queue()
 psize = 0
 
 logging.basicConfig(format='%(asctime)s %(message)s')
@@ -29,10 +40,9 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
             print('new remote connection:', psize)
             log.info('new remote connection: %s', psize)
             random_int = random.randint(1,len(proxies))-1
-            proxy = proxies[random_int]
-            port = ports[random_int]
-            print('IP PORT %s %d',proxy, port)
-            log.info('IP PORT %s %d',proxy, port)
+            proxy, port = proxies[random_int][1], proxies[random_int][2]
+            print('IP PORT %s %s' % (proxy, port))
+            log.info('IP PORT %s %s' % (proxy, port))
             remote_reader, remote_writer = await asyncio.open_connection(
                 host=proxy, port=port, ssl=True, server_hostname='ca.opera-proxy.net')
         else:
@@ -48,7 +58,7 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
             break
         headers.append(line)
     headers = b''.join(headers) + auth + b'\r\n'
-    print(headers)
+#    print(headers)
     remote_writer.write(headers)
 
     # HTTPS tunnel

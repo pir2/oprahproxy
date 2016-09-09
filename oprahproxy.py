@@ -4,6 +4,7 @@ import base64
 import hashlib
 import urllib.parse
 import uuid
+import os.path
 
 try:
     import requests
@@ -69,35 +70,6 @@ class OprahProxy:
     @staticmethod
     def you_get_a_proxy():
         pass
-        #print('++++++++++++++++++++++++++=======================~~~~~~~::::')
-        #print(',..,,,.,,...,,,.,,,,,,,,,,............,.....,.,,::::~~======')
-        #print(',,,,,:,,,,,,,,,,,,,,                    ,.,,,,,,,,,,,,,....~')
-        #print('~~~~~~~:::::::::::::  YOU GET A PROXY!  ,,,,,,,,,,,,,,,,,:~=')
-        #print('~~===~~~~::::::::::.                    ,,,,,,,,,,,,,,,~~~:~')
-        #print('::~:::::::::::::::,,...,~=::~=~:.....,,,,,,,,,,,,,,,:~:~:,::')
-        #print('??+=..,++++++++++=.....:===I+~=~....,,~~=~~~~~~~:~====~,,::~')
-        #print('::~....,...............~=~~~~:=~,...,.~~~======~==++=~:====+')
-        #print('::~...,:,,,,,,,,.......:==~+=:~:,.....,,,,,,,~~~====~,,,,,,,')
-        #print(':::~~~:,::,,::::,......+~~===~:,.....,,,,,,~~~~~==~,,,,....,')
-        #print('~:~:,,,,,:::::,..........~~::~,:....:~~~~~::::~:::::,,,,,,,,')
-        #print('~...~~~,,::~~::~:........~~~:~::.:,,:~::::::::::::::::::::::')
-        #print('+..???+?~,::::::::::::~:~::~~~:~::::::::::::::::~~=~~~~~~~~=')
-        #print('...?????+?,.:::::::::::~~:~~::~:::::::::::::::,~++++++++++++')
-        #print('?=??????+??~,::::::::~~~~~~~~~~::::::::::::::,=+++++++++++++')
-        #print('????????????::::::,::~~~~~~~~~~:::::::::::::,+++++++++++++++')
-        #print('??+??????????:,,::,:::~~~~~~~:::::::::::::,+++++++++++++++++')
-        #print('??????????????+,,,,:::~~,~~~~~:::=,:::::,?+?++++++++++++++++')
-        #print('????????????????+,:::~~:,~~~~~~~~:~::::=+??+?++?++++++++++++')
-        #print('??????????????????:::~~~~~~~~~~~:::::::???????++++++++++++++')
-        #print('??????????????????=:::~~~~~~~~~::::::::+??????+++++?+?++++++')
-        #print('=+==+====++++++++==:::~:,~~~~~:::,::::~====~~::::,,...,:~~=+')
-        #print('++++++++++++===++++::~:~~~~~~::::~::::=+++++++++++++========')
-        #print('=====+++++=====++++:~:~~~~~~::::::::::~++===================')
-        #print('+++==+======+++                           ==================')
-        #print('~~~~==========~  EVERYBODY GETS A PROXY!  ~~~~~~~~~~~~~~~~~~')
-        #print('~~~~~~~~~~~===~                           ~~~~~~~~~~~~~~~~~~')
-        #print('=============++===:::::::::::::::::::::~~~~~~~~~~~~~~~~~~~:~')
-        #print('https://github.com/spaze/oprah-proxy :::==~=~~~~~~~~=~~~~~~~')
 
     def register_device(self):
         #print('DEBUG: Call register_device')
@@ -137,13 +109,18 @@ class OprahProxy:
         #      (result['data']['requester_geo']['country_code'],
         #       '/' if result['data']['requester_geo']['state_code'] else '',
         #       result['data']['requester_geo']['state_code']))
-        for ip in result['data']['ips']:
-            for port in ip['ports']:
-                if port == 443 and self.example_proxy is None:
-                    self.example_proxy = '%s:%s' % (ip['ip'], port)
-                print('INFO: Proxy in %s/%s %s:%s' %
-                      (ip['geo']['country_code'], ip['geo']['state_code'],
-                       ip['ip'], port))
+        if not os.path.isfile('proxylist.csv'):
+            for ip in result['data']['ips']:
+                for port in ip['ports']:
+                    if port == 443 and self.example_proxy is None:
+                        self.example_proxy = '%s:%s' % (ip['ip'], port)
+                    #print('INFO: Proxy in %s/%s %s:%s' %
+                    #      (ip['geo']['country_code'], ip['geo']['state_code'],
+                    #       ip['ip'], port))
+                    #
+                    with open('proxylist.csv', 'a') as f:
+                        f.write(ip['geo']['country_code'] + ',' + str(ip['ip']) + ',' + str(port) + '\n' )
+
         #print('DEBUG: Proxies discovered')
 
     def everybody_gets_a_proxy(self):
@@ -168,8 +145,8 @@ class OprahProxy:
         #      'https://github.com/spaze/oprah-proxy#usage-with-other-browsers')
 
 
-#you_get_a_proxy = OprahProxy('se0306',
-#                             '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
-#you_get_a_proxy.you_get_a_proxy()
-#you_get_a_proxy.everybody_gets_a_proxy()
+you_get_a_proxy = OprahProxy('se0306',
+                             '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
+you_get_a_proxy.you_get_a_proxy()
+you_get_a_proxy.everybody_gets_a_proxy()
 #print(you_get_a_proxy.deviceid)
