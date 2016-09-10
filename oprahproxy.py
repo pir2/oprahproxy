@@ -120,7 +120,7 @@ class OprahProxy:
                         #       ip['ip'], port))
                         #
                         with open('proxylist.csv', 'a') as f:
-                            f.write(ip['geo']['country'] + ',' + str(ip['ip']) + ',' + str(port) + '\n' )
+                            f.write(country + ',' + str(ip['ip']) + ',' + str(port) + '\n' )
 
         #print('DEBUG: Proxies discovered')
 
