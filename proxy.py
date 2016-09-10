@@ -19,7 +19,15 @@ if os.path.isfile('proxylist.csv'):
 else:
     proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
 
-auth = None
+if os.path.exists('secret') and os.path.exists('creds'):
+    print('secret exists')
+    device_id, device_password = open('secret').read().split()
+    email, password = open('creds').read().split()
+    didp = device_id + ":" + device_password
+    auth = base64.b64encode(didp.encode('ascii')).decode('ascii')
+else:
+    auth = None
+
 pool = asyncio.Queue()
 psize = 0
 
@@ -109,7 +117,8 @@ def client_handler(client_reader, client_writer):
     asyncio.ensure_future(process_client(client_reader, client_writer))
 
 if __name__ == '__main__':
-    auth, proxy, port = get_proxy()
+    if not auth:
+        auth, proxy, port = get_proxy()
     auth = 'Proxy-Authorization: BASIC {}\r\n'.format(auth).encode('ascii')
     loop = asyncio.get_event_loop()
     server = loop.run_until_complete(asyncio.start_server(client_handler, port=8888))
