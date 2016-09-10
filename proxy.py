@@ -3,6 +3,7 @@ import asyncio
 import logging
 import random
 import os.path
+import base64
 import csv
 from vpn import get_proxy
 
