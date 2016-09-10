@@ -127,7 +127,7 @@ class OprahProxy:
     def everybody_gets_a_proxy(self):
         self.register_subscriber()
         self.register_device()
-        country_codes = self.geo_list():
+        country_codes = self.geo_list()
         self.discover(country_codes)
         #print(
         #    'INFO: Pick a proxy from the list above and use these credentials:')
