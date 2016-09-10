@@ -7,14 +7,6 @@ import requests
 import http.client
 import oprahproxy
 
-device_id = device_password = email = password = None
-
-if os.path.exists('secret') and os.path.exists('creds'):
-    print('secret exists')
-    device_id, device_password = open('secret').read().split()
-    email, password = open('creds').read().split()
-
-
 def get_proxy():
 
     # custom
@@ -30,12 +22,11 @@ def get_proxy():
 
     s = requests.session()
 
-    #if os.path.exists('secret') and os.path.exists('creds'):
-    #    print('secret exists')
-    #    device_id, device_password = open('secret').read().split()
-    #    email, password = open('creds').read().split()
-    #else:  # register
-    if not device_id:
+    if os.path.exists('secret') and os.path.exists('creds'):
+        print('secret exists')
+        device_id, device_password = open('secret').read().split()
+        email, password = open('creds').read().split()
+    else:  # register
         you_get_a_proxy = oprahproxy.OprahProxy('se0306',
               '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
         you_get_a_proxy.everybody_gets_a_proxy()
