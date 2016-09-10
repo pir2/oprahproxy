@@ -110,24 +110,25 @@ class OprahProxy:
         #       '/' if result['data']['requester_geo']['state_code'] else '',
         #       result['data']['requester_geo']['state_code']))
         if not os.path.isfile('proxylist.csv'):
-            for ip in result['data']['ips']:
-                for port in ip['ports']:
-                    if port == 443 and self.example_proxy is None:
-                        self.example_proxy = '%s:%s' % (ip['ip'], port)
-                    #print('INFO: Proxy in %s/%s %s:%s' %
-                    #      (ip['geo']['country_code'], ip['geo']['state_code'],
-                    #       ip['ip'], port))
-                    #
-                    with open('proxylist.csv', 'a') as f:
-                        f.write(ip['geo']['country_code'] + ',' + str(ip['ip']) + ',' + str(port) + '\n' )
+            for country in country_code:
+                for ip in result['data']['ips']:
+                    for port in ip['ports']:
+                        if port == 443 and self.example_proxy is None:
+                            self.example_proxy = '%s:%s' % (ip['ip'], port)
+                        #print('INFO: Proxy in %s/%s %s:%s' %
+                        #      (ip['geo']['country_code'], ip['geo']['state_code'],
+                        #       ip['ip'], port))
+                        #
+                        with open('proxylist.csv', 'a') as f:
+                            f.write(ip['geo']['country'] + ',' + str(ip['ip']) + ',' + str(port) + '\n' )
 
         #print('DEBUG: Proxies discovered')
 
     def everybody_gets_a_proxy(self):
         self.register_subscriber()
         self.register_device()
-        for country_code in self.geo_list():
-            self.discover(country_code)
+        country_codes = self.geo_list():
+        self.discover(country_codes)
         #print(
         #    'INFO: Pick a proxy from the list above and use these credentials:')
         #print('INFO: Username: %s' % self.device_id_hash)
@@ -146,7 +147,7 @@ class OprahProxy:
 
 
 #you_get_a_proxy = OprahProxy('se0306',
-                             '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
+#                             '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
 #you_get_a_proxy.you_get_a_proxy()
 #you_get_a_proxy.everybody_gets_a_proxy()
 #print(you_get_a_proxy.deviceid)
