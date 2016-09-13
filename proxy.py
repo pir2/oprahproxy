@@ -105,11 +105,12 @@ def client_handler(client_reader, client_writer):
 
 
 def check_proxy():
+    global proxies auth
     if os.path.isfile('proxylist.csv'):
         with open('proxylist.csv', newline='') as csvfile:
             i = csv.reader(csvfile, delimiter=',')
             proxylist = [proxylist for proxylist in i] 
-        global proxies = [p for p in proxylist if p[0] in mycountries]
+        proxies = [p for p in proxylist if p[0] in mycountries]
     else:
         proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
 
@@ -118,9 +119,9 @@ def check_proxy():
         device_id, device_password = open('secret').read().split()
         email, password = open('creds').read().split()
         didp = device_id + ":" + device_password
-        global auth = base64.b64encode(didp.encode('ascii')).decode('ascii')
+        auth = base64.b64encode(didp.encode('ascii')).decode('ascii')
     else:
-        global auth = None
+        auth = None
     
     return auth
 
