@@ -5,29 +5,15 @@ import random
 import os.path
 import base64
 import csv
-from vpn import get_proxy
+import oprahproxy
+#from vpn import get_proxy
 
 
 log = logging.getLogger(__name__)
 
 mycountries = ['CA','US']
 
-if os.path.isfile('proxylist.csv'):
-    with open('proxylist.csv', newline='') as csvfile:
-        i = csv.reader(csvfile, delimiter=',')
-        proxylist = [proxylist for proxylist in i] 
-    proxies = [p for p in proxylist if p[0] in mycountries]
-else:
-    proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
-
-if os.path.exists('secret') and os.path.exists('creds'):
-    print('secret exists')
-    device_id, device_password = open('secret').read().split()
-    email, password = open('creds').read().split()
-    didp = device_id + ":" + device_password
-    auth = base64.b64encode(didp.encode('ascii')).decode('ascii')
-else:
-    auth = None
+auth = proxies = proxy = port = country = None
 
 pool = asyncio.Queue()
 psize = 0
@@ -67,7 +53,7 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
             break
         headers.append(line)
     headers = b''.join(headers) + auth + b'\r\n'
-#    print(headers)
+   #print(headers)
     remote_writer.write(headers)
 
     # HTTPS tunnel
@@ -75,15 +61,14 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
         async def forward():
             while True:
                 req = await client_reader.read(CHUNK)
-#                print('> ', req)
+                #print('> ', req)
                 if not req:
                     break
                 remote_writer.write(req)
-#                remote_writer.drain()
         async def backward():
             while True:
                 res = await remote_reader.read(CHUNK)
-#                print('< ', res)
+                #print('< ', res)
                 if not res:
                     break
                 client_writer.write(res)
@@ -97,13 +82,13 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
         while sent < content_length:
             req = await client_reader.read(CHUNK)
             sent += len(req)
-#            print('> ', req)
+            #print('> ', req)
             remote_writer.write(req)
         await remote_writer.drain()
 
         while True:
             res = await remote_reader.read(CHUNK)
-#            print('< ', res)
+            #print('< ', res)
             client_writer.write(res)
             if len(res) < CHUNK:
                 break
@@ -114,12 +99,43 @@ async def process_client(client_reader, client_writer, *, CHUNK=4096):
     print('Client finished:', client_name)
     log.info('Client finished: %s', client_name)
 
+
 def client_handler(client_reader, client_writer):
     asyncio.ensure_future(process_client(client_reader, client_writer))
 
+
+def check_proxy():
+    if os.path.isfile('proxylist.csv'):
+        with open('proxylist.csv', newline='') as csvfile:
+            i = csv.reader(csvfile, delimiter=',')
+            proxylist = [proxylist for proxylist in i] 
+        global proxies = [p for p in proxylist if p[0] in mycountries]
+    else:
+        proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
+
+    if os.path.exists('secret') and os.path.exists('creds'):
+        print('secret exists')
+        device_id, device_password = open('secret').read().split()
+        email, password = open('creds').read().split()
+        didp = device_id + ":" + device_password
+        global auth = base64.b64encode(didp.encode('ascii')).decode('ascii')
+    else:
+        global auth = None
+    
+    return auth
+
+
+def get_proxy():
+    print('Attempting to get proxies.')
+    you_get_a_proxy = oprahproxy.OprahProxy('se0306',
+          '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
+    you_get_a_proxy.everybody_gets_a_proxy()
+    
+
 if __name__ == '__main__':
-    if not auth:
-        auth, proxy, port = get_proxy()
+    while not check_proxy():
+        print('No proxy information found.')
+        get_proxy()
     auth = 'Proxy-Authorization: BASIC {}\r\n'.format(auth).encode('ascii')
     loop = asyncio.get_event_loop()
     server = loop.run_until_complete(asyncio.start_server(client_handler, port=8888))
