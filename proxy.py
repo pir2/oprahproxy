@@ -115,7 +115,7 @@ def check_proxy():
         proxies = [['68.71.61.22','443'],['162.253.131.60','80']]
 
     if os.path.exists('secret') and os.path.exists('creds'):
-        print('secret exists')
+        #print('secret exists')
         device_id, device_password = open('secret').read().split()
         email, password = open('creds').read().split()
         didp = device_id + ":" + device_password
@@ -131,6 +131,7 @@ def get_proxy():
     you_get_a_proxy = oprahproxy.OprahProxy('se0306',
           '7502E43F3381C82E571733A350099BB5D449DD48311839C099ADC4631BA0CC04')
     you_get_a_proxy.everybody_gets_a_proxy()
+    print('Proxies retrieved.')
     
 
 if __name__ == '__main__':
