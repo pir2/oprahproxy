@@ -105,7 +105,7 @@ def client_handler(client_reader, client_writer):
 
 
 def check_proxy():
-    global proxies auth
+    global proxies, auth
     if os.path.isfile('proxylist.csv'):
         with open('proxylist.csv', newline='') as csvfile:
             i = csv.reader(csvfile, delimiter=',')
